@@ -13,6 +13,7 @@ from cv_bridge import CvBridge, CvBridgeError
 import cv2
 import numpy as np
 import rospy
+from pyzbar.pyzbar import decode
 
 class image_proc():
 
@@ -22,13 +23,13 @@ class image_proc():
 		self.image_sub = rospy.Subscriber("/edrone/camera/image_raw", Image, self.image_callback) #Subscribing to the camera topic
 		self.img = np.empty([]) # This will contain your image frame from camera
 		self.bridge = CvBridge()
-
+        
 
 	# Callback function of amera topic
 	def image_callback(self, data):
 		try:
 			self.img = self.bridge.imgmsg_to_cv2(data, "bgr8")
-			rospy.loginfo("image data".format(self.img)) # Converting the image to OpenCV standard image
+			#rospy.loginfo("image data".format(self.img)) # Converting the image to OpenCV standard image
 		except CvBridgeError as e:
 			print(e)
 			return
